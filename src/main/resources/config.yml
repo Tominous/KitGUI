@@ -1,0 +1,105 @@
+# The main configuration file for KitGUI by Shockzeh.
+# Do not use tabs - they are not supported in YAML, it may reset the configuration file.
+# Use a YAML parser if you are unsure as to whether you have used the correct indentation, etc.
+
+# The inventory items used within the Kit GUI.
+items:
+  available:
+    name: '&a&l&n<kit>'
+    material: STAINED_GLASS_PANE;5
+    lore:
+      - ''
+      - '&e&lKit Information:'
+      - ' &6&l* &eCooldown &7<total>'
+      - ' &6&l* &eNumber of Items &7<items>'
+      - ''
+      - '&a&lAVAILABLE'
+      - ''
+      - '&7&o(( Tip: &fRight Click &7&oto view kit contents! ))'
+    # Item Flags can be applied to these so that custom items
+    # won't show attributes, potion effects, etc.
+    # Separate them with a comma and space.
+    # List of Item Flags: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/inventory/ItemFlag.html
+    flags: [HIDE_ATTRIBUTES, HIDE_POTION_EFFECTS]
+  unavailable:
+    name: '&6&l&n<kit>'
+    material: STAINED_GLASS_PANE;1
+    lore:
+      - ''
+      - '&6&l* &eYou may use this in &7<cooldown>&e.'
+      - ''
+      - '&e&lKit Information:'
+      - ' &6&l* &eCooldown &7<total>'
+      - ' &6&l* &eNumber of Items &7<items>'
+      - ''
+      - '&c&lUNAVAILABLE'
+      - ''
+      - '&7&o(( Tip: &fRight Click &7&oto view kit contents! ))'
+  no-permission:
+    name: '&c&l&n<kit>'
+    material: STAINED_GLASS_PANE;14
+    lore:
+      - ''
+      - '&4&l* &cYou don''t have permission to redeem this kit.'
+      - ''
+      - '&e&lKit Information:'
+      - ' &6&l* &eCooldown &7<total>'
+      - ' &6&l* &eNumber of Items &7<items>'
+      - ''
+      - '&c&lLOCKED'
+      - ''
+      - '&7&o(( Tip: &fRight Click &7&oto view kit contents! ))'
+  spacer:
+    name: '&r'
+    material: STAINED_GLASS_PANE;7
+
+# General settings for the plugin.
+settings:
+  commands:
+    # Each command that will open the menu. Separate them with commas.
+    menu: [kit, kits, ekit, ekits]
+    # The command that will be executed when redeeming a kit.
+    # You don't need to change this unless you've got a command blocked.
+    # This should not consist of any arguments, just an individual command.
+    # The commands above ARE supported, default: 'kit'
+    executor: 'kit'
+  inventory:
+    # Use <amount> for the current amount of kits.
+    title: 'Viewing &n<amount>&r Kits'
+    # Setting the size to -1 bases it off of how many kits there are.
+    size: -1
+  previewer:
+    # Whether the previewer is enabled or not.
+    enabled: true
+    # The title of the previewer inventory.
+    title: 'Previewing Kit: &n<kit>'
+  kits:
+    # Separate kits you don't want to show with a comma.
+    hidden: ['removed-kit1', 'removed-kit2']
+    # Should the kits the user has no permission to be hidden?
+    hide-without-permission: false
+    # Specify specific materials for kits.
+    # The kit MUST be LOWERCASE.
+    items:
+      pvp: DIAMOND_SWORD;0
+  # To disable a sound or particle, set it to empty ('').
+  # Format: NAME;VOLUME;PITCH
+  sounds:
+    # Upon opening the menu.
+    menu-opened: BAT_TAKEOFF;1.0;0.3
+    # Upon clicking a kit the player has no permission for.
+    no-permission: VILLAGER_NO;1.0;1.0
+    # Upon clicking an unavailable kit.
+    unavailable: VILLAGER_NO;1.0;1.0
+    # Upon redeeming an available kit.
+    available: LEVEL_UP;1.0;0.3
+  # Format: NAME;X_OFFSET;Y_OFFSET;Z_OFFSET;SPEED;AMOUNT
+  particles:
+    # Upon opening the menu.
+    menu-opened: LAVA;2.0;2.0;2.0;2.0;50
+    # Upon clicking a kit the player has no permission for.
+    no-permission: CRIT;2.0;2.0;2.0;2.0;50
+    # Upon clicking an unavailable kit.
+    unavailable: CRIT;2.0;2.0;2.0;2.0;50
+    # Upon redeeming an available kit.
+    available: SPELL_WITCH;2.0;2.0;2.0;2.0;50
