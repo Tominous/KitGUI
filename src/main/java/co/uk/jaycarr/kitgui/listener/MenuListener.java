@@ -1,8 +1,8 @@
-package com.asyncjay.kitgui.listener;
+package co.uk.jaycarr.kitgui.listener;
 
-import com.asyncjay.kitgui.KitGuiPlugin;
-import com.asyncjay.kitgui.menu.Menu;
-import com.asyncjay.kitgui.menu.Menu.MenuItem;
+import co.uk.jaycarr.kitgui.KitGuiPlugin;
+import co.uk.jaycarr.kitgui.menu.Menu;
+import co.uk.jaycarr.kitgui.menu.Menu.MenuItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

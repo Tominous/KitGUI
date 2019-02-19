@@ -1,6 +1,6 @@
-package com.asyncjay.kitgui.kit;
+package co.uk.jaycarr.kitgui.kit;
 
-import com.asyncjay.kitgui.KitGuiPlugin;
+import co.uk.jaycarr.kitgui.KitGuiPlugin;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.Kit;
 import com.earth2me.essentials.MetaItemStack;
@@ -16,7 +16,7 @@ import java.util.logging.Level;
 public final class KitRegistry {
 
     private final KitGuiPlugin plugin;
-    private final Map<Kit, ItemStack[]> kits = new LinkedHashMap<>();
+    private final Map<String, KitData> kits = new LinkedHashMap<>();
     private final Map<UUID, BukkitTask> tasks = new HashMap<>();
 
     public KitRegistry(KitGuiPlugin plugin) {
@@ -35,11 +35,16 @@ public final class KitRegistry {
         section.getKeys(false).forEach(kit -> {
             try {
                 Kit essKit = new Kit(kit.toLowerCase(), this.plugin.getEssentials());
-                this.kits.put(essKit, this.parseItems(essKit.getItems()));
+                long cooldown = 0L; // TODO: get cooldown for kit
+                this.kits.put(essKit.getName(), new KitData(essKit, this.parseItems(essKit.getItems()), cooldown));
             } catch (Exception e) {
                 this.plugin.getLogger().log(Level.WARNING, "Failed to load kit: " + kit, e);
             }
         });
+    }
+
+    public Map<String, KitData> getKits() {
+        return Collections.unmodifiableMap(this.kits);
     }
 
     private ItemStack[] parseItems(List<String> values) {
@@ -60,7 +65,7 @@ public final class KitRegistry {
                     items[itemIdx++] = mStack.getItemStack();
                 }
             }
-        } catch (Exception e) {
+        } catch (Exception e) { // MetaItemStack#parseStringMeta(...) throws Exception
             this.plugin.getLogger().log(Level.WARNING, "Failed to parse kit items", e);
         }
 
@@ -70,7 +75,7 @@ public final class KitRegistry {
     private ConfigurationSection getKitsSection() {
         Essentials essentials = this.plugin.getEssentials();
         try {
-            if (essentials.getClass().getMethod("getKits") != null) {
+            if (essentials.getClass().getDeclaredMethod("getKits") != null) {
                 return essentials.getKits().getConfig().getConfigurationSection("kits");
             }
         } catch (NoSuchMethodException e) {

@@ -1,6 +1,6 @@
-package com.asyncjay.kitgui.menu;
+package co.uk.jaycarr.kitgui.menu;
 
-import com.asyncjay.kitgui.util.StringUtil;
+import co.uk.jaycarr.kitgui.util.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -15,14 +15,12 @@ import java.util.Map;
 public abstract class Menu implements InventoryHolder {
 
     private final Inventory inventory;
-    private final boolean autoSize;
     private final Map<Integer, MenuItem> items = new HashMap<>();
 
     private Menu parent;
 
     public Menu(String title, int size) {
-        this.autoSize = size % 9 == 0;
-        this.inventory = Bukkit.createInventory(this, (this.autoSize ? 9 : size), StringUtil.toColor(title));
+        this.inventory = Bukkit.createInventory(this, safeInventorySize(size), StringUtil.toColor(title));
     }
 
     public Menu(ConfigurationSection section) {
@@ -30,24 +28,40 @@ public abstract class Menu implements InventoryHolder {
     }
 
     @Override
-    public Inventory getInventory() {
+    public final Inventory getInventory() {
         return this.inventory;
     }
 
-    public void openInventory(Player player) {
+    public final void openInventory(Player player) {
         player.openInventory(this.inventory);
     }
 
-    public MenuItem getItem(int slot) {
-        return this.items.get(slot);
-    }
 
-    public Menu getParent() {
+    public final Menu getParent() {
         return this.parent;
     }
 
-    public void setItem(int slot, ItemStack item, ClickListener listener) {
+    public final void setParent(Menu parent) {
+        this.parent = parent;
+    }
+
+    public final MenuItem getItem(int slot) {
+        return this.items.get(slot);
+    }
+
+    public final void setItem(int slot, ItemStack item, ClickListener listener) {
         this.items.put(slot, new MenuItem(item, listener));
+    }
+
+    public final void fill(ItemStack item, ClickListener listener) {
+        MenuItem menuItem = new MenuItem(item, listener);
+        for (int i = 0; i < this.inventory.getSize(); i++) {
+            this.items.put(i, menuItem);
+        }
+    }
+
+    private static int safeInventorySize(int input) {
+        return (input < 9) ? 9 : ((input > 54) ? 54 : ((input + 8) / 9 * 9));
     }
 
     public abstract void draw();
@@ -63,7 +77,7 @@ public abstract class Menu implements InventoryHolder {
         }
 
         public ClickListener getListener() {
-            return listener;
+            return this.listener;
         }
     }
 

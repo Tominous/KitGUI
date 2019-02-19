@@ -1,4 +1,4 @@
-package com.asyncjay.kitgui.util;
+package co.uk.jaycarr.kitgui.util;
 
 import org.bukkit.ChatColor;
 

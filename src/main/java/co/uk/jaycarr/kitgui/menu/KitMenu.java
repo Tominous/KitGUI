@@ -1,6 +1,7 @@
-package com.asyncjay.kitgui.menu;
+package co.uk.jaycarr.kitgui.menu;
 
-import com.asyncjay.kitgui.KitGuiPlugin;
+import co.uk.jaycarr.kitgui.KitGuiPlugin;
+import co.uk.jaycarr.kitgui.kit.KitData;
 
 public final class KitMenu extends Menu {
 
@@ -13,6 +14,8 @@ public final class KitMenu extends Menu {
 
     @Override
     public void draw() {
+        for (KitData kit : this.plugin.getKitRegistry().getKits().values()) {
 
+        }
     }
 }

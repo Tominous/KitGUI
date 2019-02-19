@@ -1,6 +1,6 @@
-package com.asyncjay.kitgui.listener;
+package co.uk.jaycarr.kitgui.listener;
 
-import com.asyncjay.kitgui.KitGuiPlugin;
+import co.uk.jaycarr.kitgui.KitGuiPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;

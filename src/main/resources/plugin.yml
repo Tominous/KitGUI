@@ -1,6 +1,6 @@
 name: KitGUI
 version: 1.8
-main: com.asyncjay.kitgui.KitGuiPlugin
+main: co.uk.jaycarr.kitgui.KitGuiPlugin
 author: AsyncJay
 description: Adds a fancy menu to Essentials' kits system.
 depend: [Essentials]

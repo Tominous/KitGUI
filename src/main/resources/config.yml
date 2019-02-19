@@ -1,50 +1,66 @@
-# The main configuration file for KitGUI by Shockzeh.
-# Do not use tabs - they are not supported in YAML, it may reset the configuration file.
-# Use a YAML parser if you are unsure as to whether you have used the correct indentation, etc.
+# KitGUI by Shockzeh
 
-# The inventory items used within the Kit GUI.
+# The individual pages used in the main menu.
+# Any kits not added to a page will be displayed in the main menu
+# unless they are within the hidden kits list.
+pages:
+  # The section names are irrelevant, just keep them unique.
+  '1':
+    name: '&a&lPlayer Kits'
+    material: DIAMOND_SWORD
+    lore:
+    - '&7Click to view player kits.'
+    kits: [ 'Starter' ]
+
+# The items used when displaying kits in the menus.
 items:
   available:
-    name: '&a&l&n<kit>'
+    # {0} is the kit name
+    name: '&a&l&n{0}'
     material: STAINED_GLASS_PANE;5
+    # {1} is the cooldown total
+    # {2} is the total number of items in the kit
     lore:
       - ''
       - '&e&lKit Information:'
-      - ' &6&l* &eCooldown &7<total>'
-      - ' &6&l* &eNumber of Items &7<items>'
+      - ' &6&l* &eCooldown &7{1}'
+      - ' &6&l* &eNumber of Items &7{2}'
       - ''
       - '&a&lAVAILABLE'
       - ''
       - '&7&o(( Tip: &fRight Click &7&oto view kit contents! ))'
-    # Item Flags can be applied to these so that custom items
-    # won't show attributes, potion effects, etc.
-    # Separate them with a comma and space.
-    # List of Item Flags: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/inventory/ItemFlag.html
     flags: [HIDE_ATTRIBUTES, HIDE_POTION_EFFECTS]
   unavailable:
-    name: '&6&l&n<kit>'
+    # {0} is the kit name
+    name: '&6&l&n{0}'
     material: STAINED_GLASS_PANE;1
+    # {1} is the cooldown total
+    # {2} is the total number of items in the kit
+    # {3} is the cooldown remaining
     lore:
       - ''
-      - '&6&l* &eYou may use this in &7<cooldown>&e.'
+      - '&6&l* &eYou may use this in &7{3}&e.'
       - ''
       - '&e&lKit Information:'
-      - ' &6&l* &eCooldown &7<total>'
-      - ' &6&l* &eNumber of Items &7<items>'
+      - ' &6&l* &eCooldown &7{1}'
+      - ' &6&l* &eNumber of Items &7{2}'
       - ''
       - '&c&lUNAVAILABLE'
       - ''
       - '&7&o(( Tip: &fRight Click &7&oto view kit contents! ))'
   no-permission:
+    # {0} is the kit name
     name: '&c&l&n<kit>'
     material: STAINED_GLASS_PANE;14
+    # {1} is the cooldown total
+    # {2} is the total number of items in the kit
     lore:
       - ''
       - '&4&l* &cYou don''t have permission to redeem this kit.'
       - ''
       - '&e&lKit Information:'
-      - ' &6&l* &eCooldown &7<total>'
-      - ' &6&l* &eNumber of Items &7<items>'
+      - ' &6&l* &eCooldown &7{1}'
+      - ' &6&l* &eNumber of Items &7{2}'
       - ''
       - '&c&lLOCKED'
       - ''
@@ -53,7 +69,7 @@ items:
     name: '&r'
     material: STAINED_GLASS_PANE;7
 
-# General settings for the plugin.
+# General settings used within the plugin.
 settings:
   commands:
     # Each command that will open the menu. Separate them with commas.
@@ -62,28 +78,24 @@ settings:
     # You don't need to change this unless you've got a command blocked.
     # This should not consist of any arguments, just an individual command.
     # The commands above ARE supported, default: 'kit'
-    executor: 'kit'
-  inventory:
-    # Use <amount> for the current amount of kits.
-    title: 'Viewing &n<amount>&r Kits'
-    # Setting the size to -1 bases it off of how many kits there are.
-    size: -1
-  previewer:
-    # Whether the previewer is enabled or not.
-    enabled: true
-    # The title of the previewer inventory.
-    title: 'Previewing Kit: &n<kit>'
+    executor: kit
   kits:
     # Separate kits you don't want to show with a comma.
     hidden: ['removed-kit1', 'removed-kit2']
     # Should the kits the user has no permission to be hidden?
     hide-without-permission: false
     # Specify specific materials for kits.
-    # The kit MUST be LOWERCASE.
     items:
       pvp: DIAMOND_SWORD;0
-  # To disable a sound or particle, set it to empty ('').
-  # Format: NAME;VOLUME;PITCH
+  inventories:
+    # The main menu displaying pages and kits.
+    # {0} is the amount of kits in the menu (if main menu displays all pages, not necessary)
+    main-menu:
+      title: 'Kits'
+    # The kit preview menu - {0} is the kit name
+    previewer:
+      title: 'Previewing Kit: &n{0}'
+  # Format: NAME;VOLUME;PITCH - to disable a sound or particle, set it to empty ('')
   sounds:
     # Upon opening the menu.
     menu-opened: BAT_TAKEOFF;1.0;0.3
@@ -103,3 +115,6 @@ settings:
     unavailable: CRIT;2.0;2.0;2.0;2.0;50
     # Upon redeeming an available kit.
     available: SPELL_WITCH;2.0;2.0;2.0;2.0;50
+
+# Do not change. This is used to check compatiblity against the plugin version.
+config-version: 1.1
